@@ -1,0 +1,109 @@
+# **Setting up the Sensor**
+## **Intel Nuc**
+---
+### Steps
+1. Power on and F10
+2. UEFI : USB : General : Part 1 : OS Boot loader
+3. Test the media first for good measure
+4. Select your language
+5. Network and Hostname
+6. Set up two interfaces, one for MGMT and one for sniffing
+7. Right is MGMT and the left is sniffing (looking at it from the back)
+8. MGMT is eno1
+9. Connect an ethernet from the MGMT port to the LAN port on your PFSense
+10. Flip the switch on the top right of eno1 to 'on'
+11. Click 'configure'
+12. IPv4 Settings
+13. Method: Manual
+14. Under addresses, type your sensor IP: 172.16.x0.100
+15. 255.255.255.0 for the Netmask
+16. Gateway will be your PFSense IP: 172.16.x0.1
+17. Go over to IPv6 Settings, under method, hit ignore
+18. Click 'save'
+19. Bottom left corner change hostname to SG-x0.local.lan
+20. Click 'done'
+21. Go to 'Date and Time'
+22. Region 'ETC'
+23. Under city, it is coordinated universal time
+24. Make sure Network Time on the top right is on as well
+25. click 'done'
+26. Under software selection, there should be a subscript of "minimal install"
+27. Disable KDUMP, dont need the extra data on our system
+28. **Installation Destination**
+29. Should be 2 disks, we are selecting both. We want to blow them away
+30. One for data partition and one for OS is the goal
+31. Check automatically configure partitionining
+32. Select I would like to make additional space available
+33. Click done
+34. Select 'delete all'
+35. Then select 'reclaim space'
+36. Go back into installation destination and create your own partitions
+37. Check 'I will configure partitioning'
+38. Keep 'I would like to make additional space available' checked
+39. Select 'Done'
+40. Select hyperlink 'Click here to create them automatically'
+41. Should be seeing your partitions
+42. Select /home
+43. Change desired capacity to 1G
+44. Select 'Update Settings' (should convert to 1024)
+45. do the same for the root directory
+46. We are doing this to reclaim the space
+47. Going to add another partition
+48. We are adding /var/log
+49. Select + icon and label the partition as so
+50. Capacity should be 1 G
+51. Select 'Add Mount Point'
+52. going to add a couple more partitions
+53. add /tmp
+54. /var
+55. /var/log/audit
+56. /var/tmp
+57. /data/stenographer (because steno writes to disk )
+58. /data/suricata (because suricata writes to disk )
+59. /data/kafka (because kafka writes to disk )
+60. /data/elasticsearch (because elasticsearch writes to disk )
+61. /data/zeek (because zeek writes to disk )
+62. Normally Zeek goes through Kafka but for this class we are going to show it writing to disk
+63. /data/fsf (because fsf writes to disk )
+64. We want to separate our operating systems tools from our data tools
+65. select root
+66. volume group > create a new volume group
+67. select the smaller disk, 500 gigs
+68. Name it VG_OS
+69. select 'save'
+70. select 'update'
+71. Anything that doesnt say data is going to be a VG_OS
+72. | VG_OS | /tmp [50G] | /var [50G] | /var/log [50G] | /var/log/audit [50G] | /var/tmp [10G] | /home [50G] | swap [4G] | / [blank] |
+73. | VG_Data | /data/stenographer [500G] | /data/suricata [25G] | /data/kafka [100G] | /data/zeek [25G] | /data/fsf [10G] | /data/elasticsearch [blank]
+74. under /data/zeek, create new volume group
+75. 1TB
+76. VG_data
+77. add VG_data to all the sections above
+78. go through and adjust the desired capacity for each section listed above from the 1024
+79. **dont touch the /boot drives**
+80. Do the elasticsearch and / drives last because they are left blank meaing they will take whatever space is left
+81. Should be around 5805 KiB left over
+82. the eve.json file from suricata gets moved permanently to elasticsearch which is why we dont give it that much space
+83. Steno has a lot of space due to pcaps
+84. Kafka has a lot to give log stash time to catch up
+85. once you verify the mount points, click done
+86. accept the changes when you click done
+87. when we click begin installation and then you create user
+88. **this is time sensitive so move fast!**
+89. call the user admin // password simple
+90. If you dont fill it out in time, then you will not have an admin
+91. Select 'reboot'
+92. make sure to take the centOS flashdrive out though
+93. log in with your user credentials once it is back up in the terminal
+94. 'ip a' to verify your IP and the eno1 you just set up
+95. now ssh into your sensor from your laptop to check if its on
+96. ssh <username>@IP
+97. validate the network script for the mgmt interface
+98. sudo vi /etc/sysconfig/network-scripts/ifcfg-eno1
+99. change all the IPv6 to 'no'
+100. sudo vi /etc/sysctl.conf
+101. add a line that says 'net.ipv6.conf.all.disable_ipv6=1'
+102. next line says 'net.ipv6.conf.default.disable_ipv6=1'
+103. going to host file 'sudo vi /etc/hosts'
+104. either comment or delete the line that starts with "::"
+105. 'sudo sysctl -p' to reload and restart the system to force the changes
