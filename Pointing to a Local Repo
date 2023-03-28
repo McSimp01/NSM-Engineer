@@ -1,0 +1,26 @@
+# Pointing to our Local Repo
+---
+1. cd /etc/yum/repos.d
+2. ls -l
+3. Need to remove the repos current so we can have just the one we create locally
+4. sudo rm -r Centos-*
+5. Now we are going to create our own repo
+6. Open up a browser, navigate to the instructor Nuk (the share)
+7. go to the share directory, and curl it
+8. sudo curl -LO http://192.168.2.20:8080/local.repo
+9. verify the repo you pulled
+10. 'cat local.repo'
+11. make a cache for your repository, mainly pertains to the course so that not everyone is pulling from the repo cache
+12. sudo yum makecache
+13. sudo yum list zeek
+14. here we will see where zeek is going to be pointing to
+15. sudo yum update
+16. this updates the packages on the sensor
+17. do a reboot after this
+18. sudo systemctl reboot (this will close your ssh connection, will have to ssh back in)
+19. 'll' command to see the CentOS repos reappearing
+20. sudo yum makecache --disablerepo="*" --enablerepo=local*
+21. sudo yum update --disablerepo="*" --enablerepo=local*
+22. reboot to verify that they dont come back
+23. sudo systemctl reboot
+24. 
