@@ -1,0 +1,76 @@
+# Setting Up Our In Line Tap
+---
+
+1. ip a
+2. enp5s0 -- interface on the sensor will be our permiscuous port
+3. Disable NIC OFFloading to get the most raw data for Zeek
+4. sudo ethtool -k enp5s0
+5. **We are gonna run a script to turn off as much as we can off**
+6. curl -LO https://192.168.2.20:8080/interface_prep.sh
+7. make sure you curl this to the home directory (so cd)
+8. 'll' to verify your interface is in your home directory
+9. 'alias 'll='ls -l'
+10. cat interface_prep.sh
+11. **script turns all off and turns promiscuous on**
+12. sudo chmod +x interface_prep.sh
+13. **above command makes it an executable**
+14. 'll' to verify in the permissions that it is an executable
+15. sudo ./interface_prep.sh enp5s0
+16. watch how all the options are turned off by running this script
+17. sudo ethtool -K enp5s0
+18. above command is just another way to verify
+19. Edit the ifup-local script since CentOS checks it everytime we boot up
+20. Need to be in the /sbin directory before we curl
+21. curl -LlO http://192.168.2.20:8080/ifup-local
+22. 'sudo !!' this will replace the previous command with sudo before
+23. cat ifup-local (fairly similar to the previous script)
+24. **script adds our sniffing interface**
+25. sudo chmod +x ifup-local
+26. 'll ifup-local' to verify
+27. **Another file to configure in /etc**
+28. cd into /etc/sysconfig/network-scripts/ifup
+29. not a directory, so go up to network-scripts
+30. sudo vi ifup
+31. **add an entry to call up the ifup-local file**
+32. add entry at the bottom
+33. '''
+        if [ -x /sbin/ifup-local ]; then
+          /sbin/ifup-local ${DEVICE}
+        fi
+    '''
+34. **create a network script for en5sp0**
+35. sudo vi ifcfg-enp5s0
+36. BOOTPROTO = none
+37. IPv^6 = no
+38. DEFROUTE = none
+39. Make sure the device is the same as enp5s0
+40. ONBOOT = yes
+41. add a line 'NM_CONTROLLED=no'
+42. UUID will always be different with a NIC
+43. sudo systemctl reboot
+44. SSH back after waiting a min
+45. use eth tool to verify
+46. sudo ethtool -k enp5s0
+47. checksumming is marked as OFF? good.
+48. ip a to verify the interface is marked as PROMISC
+---
+
+## Power Point Notes
+- set up the in line tap to the monitor port ON THE IN LINE TAP
+- take out the MGMT connection from the PFSENSE that is connected into the MGMT on the NUC and plug it into the port 1 of the tap
+- connect the pfsense to the tap
+- port 2 on in line tap to lan 2 on pfsense
+- validate traffic ingest
+- install tcpdump or have it
+- cd /etc/yum.repos.d
+- ll
+- sudo yum install tcpdump --disablerepo=* --enablerepo=local*
+- above command is only wanting to pull from our local repo
+- no centos, you can just do sudo yum install tcpdump
+- sudo yum list tcpdump
+- tcpdump -i enp5s0
+- tcpdump -nn -i enp5s0
+- sudo tcpdump -nn -i enp5s0 -c4
+- sudo tcpdump -nn -c5 -i enp5s0 '!port 22'
+- curl 8.8.8.8 to generate traffic (in a separate terminal)
+- 
