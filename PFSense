@@ -1,0 +1,60 @@
+**Brown Day 1 Notes**
+FSF is going to be replaced soon
+Zeek can send logs directly to file beat, but it is not recommended
+Cant read and write at the same time, so Zeek and Filebeat compete which is a decrease in performance
+No competition with Kafka
+Zookeeper, provides mgmt for Kafka so Kafka can focus on the data
+
+__PF SENSE__
+1. Boot and Spam F11
+2. Hit Enter on the UEFI Install
+3. Hit UEFI: USB 2.0 Disk PMAP to install from USB flashdrive
+4. Hit Accept
+5. Install PFSense
+6. Default KeyMap
+7. Deafault with UEFI loaded
+8. Once install is finished, hit no
+9. Then hit reboot
+10. Option 1
+11. No to VLAN Setup
+12. WAN interface to be entered em0
+13. LAN interface to be entered em1
+14. Optional 1 Interface, leave nlank and press enter
+15. Proceed? y
+16. Now select option 2
+17. Select LAN
+18. 172.16.30.1 is our LAN IP
+19. CIDR is 24
+20. For the gateway, blank
+21. IPv6 blank
+22. Y for DHCP
+23. range is 172.16.30.100
+24. End address of the IPv$ client address range: 172.16.30.254
+25. HTTP Web Config is gonna be a Y
+26. Plug PFSense into Laptop once done running
+27. Manually change your IP address to be in your PFSense network. Gateway .1 - yours is .custom
+28. Login
+29. Hostname: SG-3
+30. Domain: default
+31. Primary DNS: 192.168.2.1
+32. override DNS checked
+33. next, next
+34. WAN: DHCP
+35. Uncheck "Block RFC, Block bogon networks"
+36. LAN IP Address : 172.16.30.1/24
+37. update password or skip
+38. reload
+39. Firewalls > WAN
+40. address
+41. Action > password
+42. Interface > WAN
+43. Address family ? IPv4
+44. Protocol > any
+45. source network > 192.168.2.0/24 (perched-wifi)
+46. Save and Apply changes
+47. Select DNS
+48. Uncheck enable DNS forwarder
+49. Save and Apply
+50. Select Diagnostics
+51. Halt
+52. Power on
