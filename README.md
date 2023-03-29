@@ -3,4 +3,5 @@
 2. Sensor Set up  
 3. Point to our local repo  
 4. SELinux  
-5. Stenographer  
+5. Stenographer    
+6. Suricata  
