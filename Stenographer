@@ -55,3 +55,6 @@
 36. sudo stenoread 'host 192.168.2.20' -nn
 37. sudo stenoread 'host 192.168.2.20' -nn 'src host 192.168.2.20'
 38. sample examples: stenoread 'host 8.8.8.8 and tcp' -nn 'src host 8.8.8.8'
+39. cd /data/stenographer/packets
+40. ll
+41. watch ls -al
