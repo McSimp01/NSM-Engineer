@@ -58,3 +58,4 @@
 39. cd /data/stenographer/packets
 40. ll
 41. watch ls -al
+Way to verify steno is getting traffic
