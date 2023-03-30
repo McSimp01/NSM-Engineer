@@ -6,11 +6,11 @@
 3. fast write speed, slow read speed
 4. sudo yum list stenographer
 5. Above command shows us what repo we are pulling from
-6. sudo yum install stenographer
-7. cd /etc/stenographer
-8. ll
+6. **sudo yum install stenographer**
+7. **cd /etc/stenographer**
+8. **ll**
 9. where you will find config
-10. sudo vi config
+10. **sudo vi config**
 11. ```
 {
     "Threads": [
@@ -28,34 +28,30 @@
     , "CertPath": "/etc/stenographer/certs"
   }
   ```
-12. Change packets directory to ""/data/stenographer/packets"
-13. change index to "/data/stenographer/index"
+12. **Change packets directory to ""/data/stenographer/packets"**
+13. **change index to "/data/stenographer/index"**
 14. Max directory files, leave as is, this is the number that steno uses before it starts writing over
 15. Disk free percentage is the buffer
 16. sudo which stenographer
 17. /bin/stenotype should be the answer which is what you put in the stenotype path
-18. change interfce to enps50
-19. sudo mkdir /data/stenographer/packets
-20. sudo mkdir /data/stenographer/index
-21. cd /data/stenographer
-22. ll to verify index and packets were created
+18. **change interfce to enps50**
+19. **sudo mkdir /data/stenographer/packets**
+20. **sudo mkdir /data/stenographer/index**
+21. **cd /data/stenographer**
+22. **ll** to verify index and packets were created
 23. need to change the permissions for SElinux
-24. sudo chown -R stenographer:stenographer /data/stenographer
-25. ll to verify
+24. **sudo chown -R stenographer:stenographer /data/stenographer**
+25. **ll** to verify
 26. now we are going to create steno keys
-27. sudo stenokeys.sh stenogrpaher stenographer
+27. **sudo stenokeys.sh stenogrpaher stenographer**
 28. this script allows us to generate our certs that we use while in stenographer
-29. sudo systemctl start stenographer
-30. sudo systemctl status stenographer
-31. sudo systemctl enable stenographer
-32. sudo systemctl status stenographer
-33. ^enable^status
-34. sudo journalctl -xeu stenographer (troubleshooting command)
-35. ping 192.168.2.20
-36. sudo stenoread 'host 192.168.2.20' -nn
-37. sudo stenoread 'host 192.168.2.20' -nn 'src host 192.168.2.20'
+29. **sudo systemctl start stenographer**
+30. **sudo systemctl status stenographer**
+31. **sudo systemctl enable stenographer**
+32. **sudo systemctl status stenographer**
+33. **^enable^status**
+34. **sudo journalctl -xeu stenographer** (troubleshooting command)
+35. **ping 192.168.2.20**
+36. **sudo stenoread 'host 192.168.2.20' -nn**
+37. **sudo stenoread 'host 192.168.2.20' -nn 'src host 192.168.2.20'**
 38. sample examples: stenoread 'host 8.8.8.8 and tcp' -nn 'src host 8.8.8.8'
-39. cd /data/stenographer/packets
-40. ll
-41. watch ls -al
-Way to verify steno is getting traffic
