@@ -4,49 +4,49 @@ Gonna import the emerging threat rules
 Rules go into eve.json
 
 ---
-1. sudo yum list suricata
-2. sudo yum install suricata
-3. sudo -s
+1. **sudo yum list suricata**
+2. **sudo yum install suricata**
+3. **sudo -s**
 4. the -s leaves a trail in the var log
-5. ll
-6. vi suricata.yaml
-7.  :set nu
+5. **ll**
+6. **vi suricata.yaml** be in /etc/suricata
+7.  **:set nu**
 8. change the location that logs are written to
-9. change it to /data/suricata
-10. change stats on line 60 from enabled: yes to enabled: no
+9.  line 56 change it to **/data/suricata**
+10. change stats on line 60 from **enabled: yes to enabled: no**
 11. we do this because we just want the eve.json to be the only one with logs
 12. because that is what is sent to elastic search
-13. line 70 change the fast log to no
+13. line 70 change the **fast log to no**
 14. line 83 is where eve.log lives
-15. line 404, turn off stats
-16. set logging console to no on line 557
-17. line 580 change the interface to our promiscuous
-18. line 582 uncomment the thread
-19. tell suricata that we are using afpacket
-20. cd /etc/sysconfig
-21. sudo vi /etc/sysconfig/suricata
-22. change the OPTIONS line to OPTIONS=" --af-packet=en5sp0 --user suricata "
+15. line 404, **turn off stats**
+16. **set logging console to no on line 557**
+17. **line 580 change the interface to our promiscuous**
+18. **line 582 uncomment the thread**
+19. **tell suricata that we are using afpacket**
+20. **cd /etc/sysconfig**
+21. **sudo vi /etc/sysconfig/suricata**
+22. **change the OPTIONS line to OPTIONS=" --af-packet=en5sp0 --user suricata "**
 23. add an upstream for our emerging threat rules
-24. sudo suricata-update add-source local-emerging-threats http://192.168.2.20:8080/emerging.rules.tar
-25. sudo suricata-update
-26. sudo suricata-update list-sources
+24. **sudo suricata-update add-source local-emerging-threats http://192.168.2.20:8080/emerging.rules.tar**
+25. **sudo suricata-update**
+26. **sudo suricata-update list-sources**
 27. this list the resources in the emerging threats rule set
 28. shows where the rules come from in the emerging threats
-29. cd /var/lib/suricata/rules
+29. **cd /var/lib/suricata/rules**
 30. this is where you view your rules
-31. cd /data
-32. ll
-33. sudo chown -R suricata: /data/suricata
-34. systemctl start suricata
-35. ^start^enable
-36. ^enable^status
+31. **cd /data**
+32. **ll**
+33. **sudo chown -R suricata: /data/suricata**
+34. **systemctl start suricata**
+35. **^start^enable**
+36. **^enable^status**
 37. gonna generate some alerts
 38. pull down from repo
-39. curl -LO 192.168.2.20:8080/all-class-files.zip
+39. **curl -LO 192.168.2.20:8080/all-class-files.zip**
 40. go into data directory
-41. cd /data/Suricata
-42. ll
-43. cat eve.json
-44. cat eve.json | jq
-45. tail -f eve.json
-46. just numerous ways to look at the alerts  
+41. **cd /data/Suricata**
+42. **ll**
+43. **cat eve.json**
+44. **cat eve.json | jq**
+45. **tail -f eve.json**
+46. just numerous ways to look at the alerts
