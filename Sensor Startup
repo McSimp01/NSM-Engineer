@@ -73,7 +73,7 @@
 69. select 'save'
 70. select 'update'
 71. Anything that doesnt say data is going to be a VG_OS
-72. | VG_OS | /tmp [50G] | /var [50G] | /var/log [50G] | /var/log/audit [50G] | /var/tmp [10G] | /home [50G] | swap [4G] | / [blank] |
+72. | VG_OS | /tmp [5 G] | /var [50G] | /var/log [50G] | /var/log/audit [50G] | /var/tmp [10G] | /home [50G] | swap [4G] | / [blank] |
 73. | VG_Data | /data/stenographer [500G] | /data/suricata [25G] | /data/kafka [100G] | /data/zeek [25G] | /data/fsf [10G] | /data/elasticsearch [blank]
 74. under /data/zeek, create new volume group
 75. 1TB
