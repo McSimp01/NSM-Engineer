@@ -6,3 +6,4 @@
 5. SELinux  
 6. Stenographer    
 7. Suricata  
+8. Zeek
