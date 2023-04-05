@@ -12,3 +12,4 @@
 11. ElasticSearch
 12. Kibana
 13. Filebeat
+14. Logstash
